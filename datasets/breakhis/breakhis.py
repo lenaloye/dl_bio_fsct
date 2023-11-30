@@ -46,7 +46,10 @@ class BHSimpleDataset(BHDataset):
         self.batch_size = batch_size
         self.root = root
         super().__init__()
-        self.transforms = transforms.Compose([transforms.Resize((460, 700)), transforms.ToTensor()])
+        self.transforms = transforms.Compose([transforms.Resize((224,341)),
+                                              transforms.CenterCrop(224),
+                                              transforms.ToTensor(),
+                                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
     def __getitem__(self, i):
         img_path, label = os.path.join(self.root, self._dataset_name, 'BreaKHis_v1', self.samples[i]), int(self.targets[i])
@@ -83,7 +86,10 @@ class BHSetDataset(BHDataset):
         samples_all, targets_all = self.load_breakhis(mode)
         self.categories = np.unique(targets_all)  # Unique types labels
 
-        self.transforms = transforms.Compose([transforms.Resize((460, 700)), transforms.ToTensor()])
+        self.transforms = transforms.Compose([transforms.Resize((224,341)),
+                                              transforms.CenterCrop(224),
+                                              transforms.ToTensor(),
+                                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
         img_path = os.path.join(self.root, self._dataset_name, 'BreaKHis_v1', samples_all[0])
         img = Image.open(img_path).convert('RGB')
