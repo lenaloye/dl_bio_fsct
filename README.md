@@ -2,6 +2,13 @@
 ## Project for Deep Learning in Biomedicine course
 Group 11 - Leonard Treil and Lena Loye
 
+## Introduction
+
+This project addresses a few-shot image classification problem, specifically focusing on predicting the correct histological type between eight classes of both benign and malignant breast tumors. Our objective is to obtain accurate classification with a small number of labelled examples, which will further improve diagnostic capabilities for breast cancer detection. 
+
+The algorithm we decided to implement is a Cosine Transformer, based on the paper "Enhancing Few-shot Image Classification with Cosine Transformer" by Nguyen et al. The Cosine Transformer has a similar architecture to a standard transformer encoder block with two skip connections to preserve information, a two-layer feed-forward network, and layer normalization to reduce noise. 
+
+
 ## Installation
 
 ### GitHub repository
@@ -12,9 +19,12 @@ git clone https://github.com/...git
 ```
 
 ### Dataset
-Create a data folder in the root of the project
-Download the BreaKHis dataset from kaggle: https://www.kaggle.com/datasets/ambarish/breakhis
-Extract the downloaded zip file to the data folder
+In this project we use the BreaKHis dataset. The BreaKHis dataset presents 9,109 microscopic images of breast tumor tissue. More precisely, it contains images of four histologically distinct types of benign breast tumors: adenosis (A), fibroadenoma (F), phyllodes tumor (PT), and tubular adenoma (TA), and four malignant tumors, commonly referred to as breast cancer: carcinoma (DC), lobular carcinoma (LC), mucinous carcinoma (MC), and papillary carcinoma (PC). 
+
+#### How to download it
+- Create a data folder in the root of the project
+- Download the BreaKHis dataset from kaggle: https://www.kaggle.com/datasets/ambarish/breakhis
+- Extract the downloaded zip file to the data folder
 
 ### Conda
 Create a conda environment and install requirements.
@@ -58,5 +68,10 @@ You must update the `project` and `entity` fields in `conf/main.yaml` to your ow
 To log in to WandB, run `wandb login` and enter the API key provided on the website for your account.
 
 ## References
-Algorithm implementations based on [COMET](https://github.com/snap-stanford/comet) and [CloserLookFewShot](https://github.com/wyharveychen/CloserLookFewShot). Dataset preprocessing code is modified from each respective dataset paper, where applicable.
+Algorithm implementations based on [COMET](https://github.com/snap-stanford/comet) and [CloserLookFewShot](https://github.com/wyharveychen/CloserLookFewShot). 
+
+The Cosine Transformer was implemented based on the paper: Quang-Huy Nguyen, Cuong Q. Nguyen, Dung D. Le, and Hieu H. Pham. "Enhancing few-shot image
+classification with cosine transformer". IEEE Access, 11:79659–79672, 2023.
+
+Dataset preprocessing code is modified from each respective dataset paper, where applicable.
 
