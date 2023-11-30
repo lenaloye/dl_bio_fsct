@@ -27,8 +27,10 @@ class BHFewShotSubDataset(Dataset):
         self.category = category
         self.root = root
         self._dataset_name = dataset_name
-        self.transforms = transforms.Compose(
-            [transforms.Resize((460, 700)), transforms.ToTensor()])
+        self.transforms = transforms.Compose([transforms.Resize((224,341)),
+                                              transforms.CenterCrop(224),
+                                              transforms.ToTensor(),
+                                              transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])])
 
     def __getitem__(self, i):
         img_path = os.path.join(self.root, self._dataset_name, 'BreaKHis_v1', self.samples[i])
