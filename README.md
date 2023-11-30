@@ -15,7 +15,7 @@ The algorithm we decided to implement is a Cosine Transformer, based on the pape
 Clone the repository and navigate to the dl_bio_fsct folder.
 
 ```bash
-git clone https://github.com/...git
+git clone [https://github.com/...git](https://github.com/lenaloye/dl_bio_fsct.git)
 ```
 
 ### Dataset
