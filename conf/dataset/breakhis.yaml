@@ -12,7 +12,7 @@ dataset:
     _target_: datasets.breakhis.breakhis.BHSetDataset
 
 backbone:
-  _target_: backbones.conv.Conv4
+  _target_: backbones.pretrained_resnet.ResNet18
 
 # For baseline, how many total classes
 train_classes: 4
