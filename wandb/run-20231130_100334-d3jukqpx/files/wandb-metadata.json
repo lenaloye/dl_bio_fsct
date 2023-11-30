@@ -1,0 +1,46 @@
+{
+    "os": "Windows-10-10.0.19045-SP0",
+    "python": "3.10.11",
+    "heartbeatAt": "2023-11-30T09:03:36.836033",
+    "startedAt": "2023-11-30T09:03:34.859538",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "exp.name=prot_test1",
+        "method=maml",
+        "dataset=swissprot"
+    ],
+    "state": "running",
+    "program": "C:\\Users\\Hp\\Nextcloud\\EPFL\\Master 3\\Deep Learning in Biomedicine\\Projet\\fewshotbench_v2\\run.py",
+    "codePath": "Nextcloud\\EPFL\\Master 3\\Deep Learning in Biomedicine\\Projet\\fewshotbench_v2\\run.py",
+    "git": {
+        "remote": null,
+        "commit": null
+    },
+    "email": "leonard.treil@gmail.com",
+    "root": "C:/Users/Hp",
+    "host": "PC_LEO",
+    "username": "Hp",
+    "executable": "C:\\Users\\Hp\\Anaconda3\\envs\\fewshotbench\\python.exe",
+    "cpu_count": 2,
+    "cpu_count_logical": 4,
+    "cpu_freq": {
+        "current": 2492.0,
+        "min": 0.0,
+        "max": 2592.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2492.0,
+            "min": 0.0,
+            "max": 2592.0
+        }
+    ],
+    "disk": {
+        "total": 463.37112045288086,
+        "used": 431.27960205078125
+    },
+    "memory": {
+        "total": 7.8815765380859375
+    }
+}

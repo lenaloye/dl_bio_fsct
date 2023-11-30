@@ -1,0 +1,22 @@
+# @package _global_
+
+defaults:
+  - classification_base
+
+dataset:
+  name: breakhis
+  simple_cls:
+    _target_: datasets.breakhis.breakhis.BHSimpleDataset
+
+  set_cls:
+    _target_: datasets.breakhis.breakhis.BHSetDataset
+
+backbone:
+  _target_: backbones.conv.Conv4
+
+# For baseline, how many total classes
+train_classes: 4
+
+n_way: 2
+n_shot: 3
+n_query: 10
