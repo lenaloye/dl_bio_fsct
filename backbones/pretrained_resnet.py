@@ -1,7 +1,7 @@
 from torch import nn as nn
 from torchvision import models
 
-class PreTrainedResNet():
+class PreTrainedResNet(nn.Module):
     def __init__(self, type='ResNet18', flatten = False):
         super(PreTrainedResNet, self).__init__()
         if type == 'ResNet18':
@@ -23,8 +23,8 @@ class PreTrainedResNet():
         out = self.model(x)
         return out
 
-def ResNet18(x_dim, flatten=True):
+def PTResNet18(x_dim, flatten=True):
     return PreTrainedResNet('ResNet18', flatten)
 
-def ResNet34(x_dim, flatten=True):
+def PTResNet34(x_dim, flatten=True):
     return PreTrainedResNet('ResNet34', flatten)
