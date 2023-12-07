@@ -7,7 +7,7 @@ class PreTrainedResNet(nn.Module):
         if type == 'ResNet18':
             resnet = models.resnet18(weights = models.ResNet18_Weights.DEFAULT)
         elif type == 'ResNet34':
-            resnet = models.resnet34(weigths = models.ResNet34_Weights.DEFAULT)
+            resnet = models.resnet34(weights = models.ResNet34_Weights.DEFAULT)
 
         trunk = [*resnet.children()][:-2]
         
