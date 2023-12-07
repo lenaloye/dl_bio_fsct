@@ -3,6 +3,8 @@ import torch
 import torch.nn as nn
 from torch.autograd import Variable
 from torch.nn.utils.weight_norm import WeightNorm
+from einops import rearrange, repeat
+from einops.layers.torch import Rearrange
 
 from methods.meta_template import MetaTemplate
 
