@@ -1,0 +1,5 @@
+echo "!python run.py exp.name=breakhis_fsct_ResNet18 method=fsct dataset=breakhis"
+echo "!python run.py exp.name=breakhis_fsct_ResNet18 method=fsct dataset=breakhis_x40"
+echo "!python run.py exp.name=breakhis_fsct_ResNet18 method=fsct dataset=breakhis_x100"
+echo "!python run.py exp.name=breakhis_fsct_ResNet18 method=fsct dataset=breakhis_x200"
+echo "!python run.py exp.name=breakhis_fsct_ResNet18 method=fsct dataset=breakhis_x400"
