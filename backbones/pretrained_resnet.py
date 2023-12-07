@@ -23,8 +23,8 @@ class PreTrainedResNet(nn.Module):
         out = self.model(x)
         return out
 
-def PTResNet18(x_dim, flatten=True):
+def PTResNet18(x_dim, flatten=True, fast_weight = False):
     return PreTrainedResNet('ResNet18', flatten)
 
-def PTResNet34(x_dim, flatten=True):
+def PTResNet34(x_dim, flatten=True, fast_weight = False):
     return PreTrainedResNet('ResNet34', flatten)
