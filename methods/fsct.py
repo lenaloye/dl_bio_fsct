@@ -66,14 +66,35 @@ class Attention(nn.Module):
         self.output_linear = nn.Linear(inner_dim, dim)
         
     def forward(self, q, k, v):
-        f_q, f_k, f_v = map(lambda t: rearrange(
-            self.input_linear(t), 'q n (h d) ->  h q n d', h = self.heads), (q, k ,v))
+        f_q = self.input_linear(q).view(q.shape[0], q.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+        f_k = self.input_linear(k).view(k.shape[0], k.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+        f_v = self.input_linear(v).view(v.shape[0], v.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+        
+        
         dots = cosine_distance(f_q, f_k.transpose(-1, -2)) # (h, q, n, 1)
         
         out = torch.matmul(dots, f_v)                      # (h, q, n, d_h)
         out = rearrange(out, 'h q n d -> q n (h d)')       # (q, n, d)
+        out = out.permute(1, 2, 0, 3).contiguous().view(q.shape[0], q.shape[1], -1)  # (q, n, d)
         
         return self.output_linear(out)
+
+
+def forward(self, q, k, v):
+    f_q = self.input_linear(q).view(q.shape[0], q.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+    f_k = self.input_linear(k).view(k.shape[0], k.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+    f_v = self.input_linear(v).view(v.shape[0], v.shape[1], self.heads, -1).permute(2, 0, 1, 3)
+
+    if self.variant == "cosine":
+        dots = cosine_distance(f_q, f_k.transpose(-1, -2))  # (h, q, n, 1)
+        out = torch.matmul(dots, f_v)  # (h, q, n, d_h)
+    else:  # self.variant == "softmax"
+        dots = torch.matmul(f_q, f_k.transpose(-1, -2)) * self.scale
+        out = torch.matmul(self.sm(dots), f_v)
+
+    out = out.permute(1, 2, 0, 3).contiguous().view(q.shape[0], q.shape[1], -1)  # (q, n, d)
+    return self.output_linear(out)
+
 		
 
 class CosineDistLinear(nn.Module):
