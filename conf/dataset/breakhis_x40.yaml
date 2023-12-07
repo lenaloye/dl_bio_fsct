@@ -1,24 +1,12 @@
 # @package _global_
 
 defaults:
-  - classification_base
+  - breakhis
 
 dataset:
   name: breakhis_x40
   simple_cls:
-    _target_: datasets.breakhis.breakhis.BHSimpleDataset
     zoom: x40
 
   set_cls:
-    _target_: datasets.breakhis.breakhis.BHSetDataset
     zoom: x40
-
-backbone:
-  _target_: backbones.pretrained_resnet.PTResNet18
-
-# For baseline, how many total classes
-train_classes: 4
-
-n_way: 2
-n_shot: 3
-n_query: 10
