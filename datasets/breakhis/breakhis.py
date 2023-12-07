@@ -26,7 +26,6 @@ class BHDataset(FewShotDataset, ABC):
         
         types = split[mode]
         
-        print(zoom)
         if not(zoom == None):
             if zoom == 'x40':
                 df = df[df['mag'] == 40]
