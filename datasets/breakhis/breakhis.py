@@ -12,7 +12,7 @@ class BHDataset(FewShotDataset, ABC):
     _dataset_name = 'breakhis'
     _dataset_url = 'https://www.kaggle.com/datasets/ambarish/breakhis'
 
-    def load_breakhis(self, mode='train'):
+    def load_breakhis(self, mode='train', zoom = None):
         # Extract the data
         df = extract_and_process_csv(root=self._data_dir, csv_name='Folds.csv')
         
@@ -25,6 +25,9 @@ class BHDataset(FewShotDataset, ABC):
                  'test': test_type}
         
         types = split[mode]
+        
+        if not(zoom == None):
+            continue
         
         # Subset data based on target types
         df = df[df['label'].isin(types)]
@@ -40,9 +43,10 @@ class BHDataset(FewShotDataset, ABC):
 
 class BHSimpleDataset(BHDataset):
     
-    def __init__(self, batch_size, root='./data/', mode='train'):
+    def __init__(self, batch_size, root='./data/', mode='train', zoom = None):
         self.initialize_data_dir(root, download_flag=False)
-        self.samples, self.targets = self.load_breakhis(mode)
+        print(zoom)
+        self.samples, self.targets = self.load_breakhis(mode, zoom)
         self.batch_size = batch_size
         self.root = root
         super().__init__()
