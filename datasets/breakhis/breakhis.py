@@ -42,7 +42,6 @@ class BHSimpleDataset(BHDataset):
     
     def __init__(self, batch_size, root='./data/', mode='train', zoom = None):
         self.initialize_data_dir(root, download_flag=False)
-        print(zoom)
         self.samples, self.targets = self.load_breakhis(mode, zoom)
         self.batch_size = batch_size
         self.root = root
@@ -75,8 +74,10 @@ class BHSimpleDataset(BHDataset):
 
 class BHSetDataset(BHDataset):
 
-    def __init__(self, n_way, n_support, n_query, n_episode=100, root='./data', mode='train'):
+    def __init__(self, n_way, n_support, n_query, n_episode=100, root='./data', mode='train', zoom = None):
         self.initialize_data_dir(root, download_flag=False)
+        
+        print(zoom)
 
         self.n_way = n_way
         self.n_episode = n_episode
