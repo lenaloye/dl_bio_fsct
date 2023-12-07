@@ -95,6 +95,7 @@ class CosineDistLinear(nn.Module):
 
         return scores
 
+
 def cosine_distance(x1, x2):
     '''
     x1      =  [b, h, n, k]
@@ -102,6 +103,10 @@ def cosine_distance(x1, x2):
     output  =  [b, h, n, m]
     '''
     dots = torch.matmul(x1, x2)
-    scale = torch.einsum('bhi, bhj -> bhij', 
-            (torch.norm(x1, 2, dim = -1), torch.norm(x2, 2, dim = -2)))
+
+    norm_x1 = torch.norm(x1, dim=-1, keepdim=True)
+    norm_x2 = torch.norm(x2, dim=-2, keepdim=True)
+
+    scale = norm_x1 * norm_x2
+
     return (dots / scale)
