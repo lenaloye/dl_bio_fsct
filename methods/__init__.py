@@ -7,3 +7,4 @@
 # from .matchingnet import *
 # from .comet import *
 # from .meta_template import *
+# from .fsct import *
