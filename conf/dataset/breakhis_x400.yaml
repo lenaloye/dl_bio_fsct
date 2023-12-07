@@ -1,0 +1,10 @@
+defaults:
+  - breakhis
+
+dataset:
+  name: breakhis_x400
+  simple_cls:
+    zoom: x400
+
+  set_cls:
+    zoom: x400
