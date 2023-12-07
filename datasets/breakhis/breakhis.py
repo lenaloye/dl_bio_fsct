@@ -26,9 +26,6 @@ class BHDataset(FewShotDataset, ABC):
         
         types = split[mode]
         
-        if not(zoom == None):
-            continue
-        
         # Subset data based on target types
         df = df[df['label'].isin(types)]
         df = df.reset_index(drop=True)
