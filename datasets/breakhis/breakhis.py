@@ -26,6 +26,10 @@ class BHDataset(FewShotDataset, ABC):
         
         types = split[mode]
         
+        if not(zoom == None):
+            if zoom == 'x40':
+                df = df[df['mag'] == 40]
+        
         # Subset data based on target types
         df = df[df['label'].isin(types)]
         df = df.reset_index(drop=True)
@@ -76,16 +80,13 @@ class BHSetDataset(BHDataset):
 
     def __init__(self, n_way, n_support, n_query, n_episode=100, root='./data', mode='train', zoom = None):
         self.initialize_data_dir(root, download_flag=False)
-        
-        print(zoom)
-
         self.n_way = n_way
         self.n_episode = n_episode
         min_samples = n_support + n_query
 
         self.root = root
         
-        samples_all, targets_all = self.load_breakhis(mode)
+        samples_all, targets_all = self.load_breakhis(mode, zoom)
         self.categories = np.unique(targets_all)  # Unique types labels
 
         self.transforms = transforms.Compose([transforms.Resize((224,341)),
