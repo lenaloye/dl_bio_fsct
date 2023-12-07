@@ -29,11 +29,11 @@ class BHDataset(FewShotDataset, ABC):
         if not(zoom == None):
             if zoom == 'x40':
                 df = df[df['mag'] == 40]
-			elif zoom == 'x100':
+            elif zoom == 'x100':
                 df = df[df['mag'] == 100]
-			elif zoom == 'x200':
+            elif zoom == 'x200':
                 df = df[df['mag'] == 200]
-			elif zoom == 'x400':
+            elif zoom == 'x400':
                 df = df[df['mag'] == 400]
         
         # Subset data based on target types
