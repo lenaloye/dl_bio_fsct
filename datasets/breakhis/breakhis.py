@@ -65,7 +65,7 @@ class BHSimpleDataset(BHDataset):
         img_path, label = os.path.join(self.root, self._dataset_name, 'BreaKHis_v1', self.samples[i]), int(self.targets[i])
         img = Image.open(img_path).convert('RGB')
         img = self.transforms(img)
-        return img, label
+        return img, label-1
 
     def __len__(self):
         return self.samples.shape[0]
