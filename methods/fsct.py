@@ -2,6 +2,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
+from torch.nn.utils.weight_norm import WeightNorm
 
 from methods.meta_template import MetaTemplate
 
@@ -10,23 +11,20 @@ class FSCT(MetaTemplate):
     def __init__(self, backbone, n_way, n_support):
         super(FSCT, self).__init__(backbone, n_way, n_support)
         self.loss_fn = nn.CrossEntropyLoss()
-		
-		dim = self.feat_dim
-		self.ATTN = Attention(dim)
-		
-		self.sm = nn.Softmax(dim = -2)
+        
+        dim = self.feat_dim
+        self.ATTN = Attention(dim)
+        self.sm = nn.Softmax(dim = -2)
         self.proto_weight = nn.Parameter(torch.ones(n_way, n_support, 1))
 		
-		self.FFN = nn.Sequential(
-            nn.LayerNorm(dim),
-            nn.Linear(dim, 512),
-            nn.GELU(),
-            nn.Linear(512, dim))
-			
-		self.linear = nn.Sequential(
-            nn.LayerNorm(dim),
-            nn.Linear(dim, 64),
-            CosineDistLinear(64, 1))
+        self.FFN = nn.Sequential(nn.LayerNorm(dim),
+                                 nn.Linear(dim, 512),
+                                 nn.GELU(),
+                                 nn.Linear(512, dim))
+        
+        self.linear = nn.Sequential(nn.LayerNorm(dim),
+                                    nn.Linear(dim, 64),
+                                    CosineDistLinear(64, 1))
 		
 
     def set_forward(self, x, is_feature=False):
@@ -38,8 +36,8 @@ class FSCT(MetaTemplate):
 
         x = self.ATTN(q = z_proto, k = z_query, v = z_query) + z_proto
         x = self.FFN(x) + x
-		
-		scores = self.linear(x).squeeze()
+        
+        scores = self.linear(x).squeeze()
 		
         return scores
 
@@ -55,26 +53,24 @@ class FSCT(MetaTemplate):
 class Attention(nn.Module):
     def __init__(self, dim):
         super().__init__()
-		self.heads = 8
-		self.dim_head = 64
+        self.heads = 8
+        self.dim_head = 64
         inner_dim = self.heads * self.dim_head
-        
         self.scale = self.dim_head ** -0.5
         self.sm = nn.Softmax(dim = -1)
-        self.input_linear = nn.Sequential(
-            nn.LayerNorm(dim),
-            nn.Linear(dim, inner_dim, bias = False))
         
+        self.input_linear = nn.Sequential(nn.LayerNorm(dim),
+                                          nn.Linear(dim, inner_dim, bias = False))
         self.output_linear = nn.Linear(inner_dim, dim)
         
     def forward(self, q, k, v):
         f_q, f_k, f_v = map(lambda t: rearrange(
-            self.input_linear(t), 'q n (h d) ->  h q n d', h = self.heads), (q, k ,v))    
+            self.input_linear(t), 'q n (h d) ->  h q n d', h = self.heads), (q, k ,v))
+        dots = cosine_distance(f_q, f_k.transpose(-1, -2)) # (h, q, n, 1)
         
-		dots = cosine_distance(f_q, f_k.transpose(-1, -2))                                         # (h, q, n, 1)
-		out = torch.matmul(dots, f_v)                                                              # (h, q, n, d_h)
+        out = torch.matmul(dots, f_v)                      # (h, q, n, d_h)
+        out = rearrange(out, 'h q n d -> q n (h d)')       # (q, n, d)
         
-        out = rearrange(out, 'h q n d -> q n (h d)')                                                   # (q, n, d)
         return self.output_linear(out)
 		
 
