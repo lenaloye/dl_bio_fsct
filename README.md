@@ -49,6 +49,11 @@ python run.py exp.name={exp_name} method=fsct dataset=breakhis
 ```
 The experiment name must always be specified.
 
+If you want to train several models with a single command, you can use the provided `run_breakhis.sh` file. First uncomment the models that you want to test, and then run the following:
+```bash
+bash run_breakhis.sh
+```
+
 ### Testing
 
 The training process will automatically evaluate at the end. To only evaluate without running training, use the following:
